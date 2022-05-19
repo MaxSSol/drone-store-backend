@@ -1,0 +1,11 @@
+{
+    "name": "drone/drone-store",
+    "autoload": {
+        "psr-4": {
+            "app\\": "app/"
+        }
+    },
+    "require": {
+        "symfony/dotenv": "^5.4"
+    }
+}

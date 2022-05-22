@@ -192,8 +192,8 @@ class Product extends ActiveRecord
     {
         $results = [];
         foreach ($products as $product) {
-            $prod = $this->getProductById($product->product_id);
-            if ($prod->getAmount() < $product->amount) {
+            $prod = $this->getProductById($product['product_id']);
+            if ($prod->getAmount() < $product['amount']) {
                 $results[] = [$prod->getTitle() => $prod->getAmount()];
             }
         }

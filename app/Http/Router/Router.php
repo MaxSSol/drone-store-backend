@@ -26,7 +26,7 @@ class Router
             }
             foreach (self::$routes['POST'] as $pattern => $callback) {
                 if (preg_match($pattern, $url, $params)) {
-                    array_shift($params);
+                    $_POST = json_decode(file_get_contents("php://input"),true);
                     return call_user_func_array($callback,  $_POST);
                 }
             }

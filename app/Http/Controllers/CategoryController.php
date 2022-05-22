@@ -3,6 +3,7 @@
 namespace app\Http\Controllers;
 
 use app\Models\Category;
+use app\Models\ProductCategory;
 
 class CategoryController extends Controller
 {
@@ -18,5 +19,12 @@ class CategoryController extends Controller
         $category = new Category();
         $category = $category->getCategoryById($id);
         echo $this->json->toJson($category);
+    }
+
+    public function categoryProducts($id)
+    {
+        $products = new ProductCategory();
+        $products = $products->getCategoryProductsById($id);
+        echo $this->json->toJson($products);
     }
 }

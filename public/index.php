@@ -1,5 +1,6 @@
 <?php
-
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
 use app\Http\Router\Router;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -11,6 +12,8 @@ Router::route('/api/products/category/(\w+)', [new \app\Http\Controllers\Product
 
 Router::route('/api/categories', [new \app\Http\Controllers\CategoryController(), 'index']);
 Router::route('/api/categories/(\w+)', [new \app\Http\Controllers\CategoryController(), 'show']);
+Router::route('/api/categories/products/(\w+)', [new \app\Http\Controllers\CategoryController(), 'categoryProducts']);
+
 
 Router::route('/api/orders', [new \app\Http\Controllers\OrderController(), 'index']);
 Router::route('/api/orders/(\w+)', [new \app\Http\Controllers\OrderController(), 'show']);

@@ -25,11 +25,11 @@ class OrderController extends Controller
         $data = $_POST;
         $products = [];
         foreach ($data as $item) {
-            $products[] = json_decode($item);
+            $products[] = $item;
         }
         $order = new Order();
         $order = $order->addOrder($products);
-        echo count($order) < 1 ? json_encode(['status' => 'Ok']) : json_encode($order);
+        echo count($order) === 0 ? json_encode(['status' => 'Ok']) : json_encode($order);
     }
 
 }

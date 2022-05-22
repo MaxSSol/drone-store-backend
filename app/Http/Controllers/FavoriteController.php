@@ -18,7 +18,7 @@ class FavoriteController extends Controller
         $productId = $_POST['product_id'];
         $favorite = new Favorites();
         $favorite = $favorite->addToFavorite($productId);
-        echo is_string($favorite) ? json_encode(['status' => $favorite]) : json_encode(['status' => 'Ok']);
+        return count($favorite) === 0 ? json_encode(['status: Ok']) : json_encode(['status' => 'Error']);
     }
 
     public function removeFromFavorites()

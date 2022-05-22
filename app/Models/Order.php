@@ -93,22 +93,29 @@ class Order extends ActiveRecord
                 ' )';
             $this->db->query($sql, static::class);
             $order_id = $this->db->getLastInsertId();
-            $results = [];
+
             $sql = 'INSERT INTO `order_product` ' .
                 '(order_id, product_id, product_amount, product_price) ' .
                 'VALUES (:order_id, :product_id, :amount, :price)';
+            $productPrice = new Product();
+            foreach ($products as $key => $product) {
+                $productPrice = $productPrice->getProductById($product['product_id']);
+                $product['price'] = $productPrice->getPrice();
+                $products[$key] = $product;
+            }
+
             $params = $this->getParamsForDB($products);
             foreach ($params as $param) {
-                $param['order_id'] = $order_id;
-                $results[] = $this->db->query($sql, static::class, $param);
+                $param[':order_id'] = $order_id;
+                $this->db->query($sql, static::class, $param);
             }
+
             $sql = 'UPDATE products SET amount = amount - :amount WHERE product_id = :product_id';
             foreach ($params as $param) {
-                $newParam[':product_id'] = $param[':product_id'];
-                $newParam[':amount'] = $param[':amount'];
-                $results[] = $this->db->query($sql, static::class, $newParam);
+                $newParam[':product_id'] = $param['product_id'];
+                $newParam[':amount'] = $param['amount'];
+                $result = $this->db->query($sql, static::class, $newParam);
             }
-            return $results;
         }
         return $productsAmount;
     }

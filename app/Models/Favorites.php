@@ -146,7 +146,6 @@ class Favorites extends ActiveRecord
                 ' VALUES (' .
                 ' 1, :product_id )';
             $params = $this->getParamsForDB(['product_id' => $product_id]);
-
             return $this->db->query($sql, static::class, $params);
         }
 
